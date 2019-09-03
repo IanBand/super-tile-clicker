@@ -35,8 +35,6 @@ public class ResultsWindow extends JFrame{
                 setTitle("Game Lost");
                 getContentPane().add(new JLabel("Oh No, You Lost!"));
                 
-
-
                 break;
             case Won:
                 setTitle("Game Won");

@@ -13,6 +13,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <!--not sure if I need this-->
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+    </dependencies>
+    
+
     <build>
         <plugins>
             <plugin>

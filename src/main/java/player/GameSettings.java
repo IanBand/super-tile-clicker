@@ -1,5 +1,5 @@
 package player;
-public class Settings{
+public class GameSettings{
     public Mode mode;
     public int height;
     public int width;
