@@ -1,64 +1,57 @@
 package player;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.text.ParseException;
-import java.util.HashMap;
-
-
-//import org.json.simple.JSONObject;
-//import com.google.code.gson.JSONObject;
-//import org.json.simple.parser.JSONParser;
-//import org.json.simple.parser.ParseException;
-
-import com.google.gson.Gson; 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-
-
+import java.io.RandomAccessFile;
 
 public class SettingsManager {
 
     //default settings
     private SaveObj settings = new SaveObj(Mode.INTERMEDIATE, false, false, 40, 20, 120);
 
-    private String path = "C:/Users/Bundo/Desktop/code/ms-java/settings.json";
+    private String path = "C:/Users/Bundo/Desktop/code/ms-java/settings.dat";
     private boolean saving = true; //determines if the settings will be saved to a file when updated. settings should autosave when modified
 
     //... no matter what the settings are, a user should always be able to read the height, width, and num mines in a standard way
 
     
     public SettingsManager() throws IOException{
+        RandomAccessFile saveFile = null;
+        try {
+            saveFile = new RandomAccessFile(path, "r");
+            System.out.println("loading settings file");
+        
 
-
-        try{
-            JsonReader jsonReader = new JsonReader(new FileReader(path));
+            settings.flags = saveFile.readBoolean(); // flags
+            settings.questions = saveFile.readBoolean(); // questions
+            settings.mode = Mode.values()[saveFile.readInt()]; //mode
+            settings.customHeight = saveFile.readInt(); //custom height
+            settings.customWidth =  saveFile.readInt(); //custom width
+            settings.customMines =  saveFile.readInt(); //custom mines
+            //close file
+            saveFile.close();
             
-
-            
-            //saveFile.close();
-
         } 
         catch(FileNotFoundException e){ //catch file not found exception
             //if file not found, try and create
-            System.out.println("save file not found, creating new save file");
+            System.out.println("settings file not found, creating new settings file");
 
             try{ //try and create new save file
-                FileWriter newSaveFile = new FileWriter(path);
 
-                Gson gson = new Gson();
-                newSaveFile.write(gson.toJson(settings));
-
-                newSaveFile.flush();
-                newSaveFile.close();            }
+                saveFile = new RandomAccessFile(path, "rw");
+                
+                
+                //write default settings
+                saveFile.writeBoolean(settings.flags);
+                saveFile.writeBoolean(settings.questions);
+                saveFile.writeInt(settings.mode.ordinal());
+                saveFile.writeInt(settings.customHeight);
+                saveFile.writeInt(settings.customWidth);
+                saveFile.writeInt(settings.customMines);
+                //close file
+                saveFile.close();
+                
+            }
             catch(IOException e_){ //creating new save file failed
                 System.out.println(e_.getMessage());
                 saving = false;
@@ -70,32 +63,41 @@ public class SettingsManager {
             saving = false;
         }
         finally {
+            if (saveFile != null) {
+                saveFile.close();
+            }
         }
     }
 
 
-    public void setCustomHeight(int newHeight){
+    public Boolean setCustomHeight(int newHeight){
         if(newHeight * settings.customWidth - 9 >= settings.customMines){
             settings.customHeight = newHeight;
+            return true;
         }
         else{
             //notify user of invalid custom settings
+            return false;
         }
     }
-    public void setCustomWidth(int newWidth){
+    public Boolean setCustomWidth(int newWidth){
         if(settings.customHeight * newWidth - 9 >= settings.customMines){
             settings.customWidth = newWidth;
+            return true;
         }
         else{
             //notify user of invalid custom settings
+            return false;
         }
     }
-    public void setCustomMines(int newMines){
+    public Boolean setCustomMines(int newMines){
         if(settings.customHeight * settings.customWidth - 9 >= newMines){
             settings.customMines = newMines;
+            return true;
         }
         else{
             //notify user of invalid custom settings
+            return false;
         }
     }
     public GameSettings getSettings(){//returns settings based on mode

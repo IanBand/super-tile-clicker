@@ -1,5 +1,4 @@
 
-import java.awt.EventQueue;//?
 import java.io.IOException;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,8 +13,10 @@ import game.Game;
 //ui
 import ui.GameTimer;
 import ui.GameUI;
-import ui.Menu;
-import ui.ResultsWindow; //wont need here...?
+
+//menus
+import menus.MenuBar;
+import menus.ResultsWindow; //prob wont need here idk
 
 //player
 import player.SettingsManager;
@@ -32,12 +33,12 @@ class Main{
         //game settings will be read from file, if none found, create and use defaults
         int defaultHeight = 25;
         int defaultWidth = 40;
-        int defaultMines = 350;
-        Game game = new Game(defaultHeight, defaultWidth, defaultMines); 
+        int defaultMines = 0;
+        Game game = new Game(settingsManager.getSettings());
         game.add(timer);
         
         GameUI board_ui = new GameUI(game);
-        Menu menu = new Menu();
+        MenuBar menu= new MenuBar();
         
         //board_ui.repaint(); //repaint whenever the board size changes...
 

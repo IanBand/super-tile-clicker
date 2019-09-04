@@ -29,7 +29,7 @@ public class MinesweeperBoard implements Constants{
         numSafeTiles = totalTiles - numMines;
         seed = seed_;
 
-        System.out.println("seed: " + seed + ", height: " + columns_ + ", width: " + rows_ + ", numMines: " + numMines_);
+        //System.out.println("seed: " + seed + ", height: " + columns_ + ", width: " + rows_ + ", numMines: " + numMines_);
 
         //instantiate fielld and Cells
         int rightmost = columns - 1;
@@ -74,7 +74,7 @@ public class MinesweeperBoard implements Constants{
         placeNumbers(boardArea); //this is broken af lol it writes all the tile values to zero
     }
     public void uncoverFirstTile(int x, int y){
-        System.out.println("first click: ( " + x + " , " + y + " )");
+        //System.out.println("first click: ( " + x + " , " + y + " )");
         pushAwayMines(x,y);
         uncoverTile(x,y);
     }

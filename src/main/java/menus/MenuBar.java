@@ -1,18 +1,20 @@
-package ui;
+package menus;
 
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-public class Menu extends JMenuBar{
+public class MenuBar extends JMenuBar{
 
-    public Menu(/* settings and game obj...? */){
+    public MenuBar(/* settings and game obj...? */){
         JMenu replayMenu = new JMenu("Replay");
         replayMenu.setMnemonic(KeyEvent.VK_R);
 
         JMenu gameMenu = new JMenu("Game");
         gameMenu.setMnemonic(KeyEvent.VK_G);
+
+        JMenu customGameMenu = new JMenu("Custom");
 
         JMenu helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
@@ -20,10 +22,10 @@ public class Menu extends JMenuBar{
         JMenu versusMenu = new JMenu("Versus");
         versusMenu.setMnemonic(KeyEvent.VK_V);
 
-        add(replayMenu);
+        //add(replayMenu);
         add(gameMenu);
-        add(helpMenu);
-        add(versusMenu);
+        //add(helpMenu);
+        //add(versusMenu);
 
     }
 }

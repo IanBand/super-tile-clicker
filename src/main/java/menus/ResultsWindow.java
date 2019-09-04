@@ -1,4 +1,4 @@
-package ui;
+package menus;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -46,7 +46,7 @@ public class ResultsWindow extends JFrame{
         addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
                 //if(not quit button){
-                    game.newGame();
+                    game.resetGame();
                 //}
             }
         });
@@ -56,7 +56,7 @@ public class ResultsWindow extends JFrame{
         JButton playAgain = new JButton("Play Again");
         playAgain.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                game.newGame();
+                game.resetGame();
                 dispose();
             }          
         });
