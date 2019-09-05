@@ -17,6 +17,7 @@ import ui.GameUI;
 //menus
 import menus.MenuBar;
 import menus.ResultsWindow; //prob wont need here idk
+import menus.SettingsWindow;
 
 //player
 import player.SettingsManager;
@@ -31,31 +32,29 @@ class Main{
 
         GameTimer timer = new GameTimer();
         //game settings will be read from file, if none found, create and use defaults
-        int defaultHeight = 25;
-        int defaultWidth = 40;
-        int defaultMines = 0;
+
         Game game = new Game(settingsManager.getSettings());
         game.add(timer);
         
         GameUI board_ui = new GameUI(game);
         MenuBar menu= new MenuBar();
         
-        //board_ui.repaint(); //repaint whenever the board size changes...
-
-
         JFrame mainWindow = new JFrame("Super Tile Clicker");
         mainWindow.getContentPane().setBackground(new Color(185, 184, 185));
 
+
+        //ALLA DIS HAS TO BE REDONE ERRY TIME THE BOARD SIZE CHANGES, ALSO A REPAINT TOO.
+        //board_ui.repaint(); //repaint whenever the board size changes...
         //current dimensions are based on a board size of 20 by 20, 
         //the equation should be something like windowWidth = boardWidth * 20 + 20 or ww = bw * 21
         //height is the same but account for the timer, which is about boardHeight * 20 + 35 to account for the jlabel
         int cellSize = 20;
-
-
-        int dimW = cellSize * defaultWidth + 16;
-        int dimH = cellSize * defaultHeight + 77;
+        int dimW = cellSize * settingsManager.getSettings().width + 16;
+        int dimH = cellSize * settingsManager.getSettings().height + 77;
         mainWindow.setPreferredSize(new Dimension(dimW , dimH)); //(width, height)
         mainWindow.setMinimumSize(new Dimension(dimW , dimH));
+
+
         mainWindow.add(board_ui);
         mainWindow.add(timer, BorderLayout.SOUTH);
         mainWindow.setJMenuBar(menu);
@@ -70,6 +69,7 @@ class Main{
 
         game.add(mainWindow);
 
+        //SettingsWindow swindow = new SettingsWindow();
     }
 
 }

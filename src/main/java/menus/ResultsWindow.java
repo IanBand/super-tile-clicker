@@ -53,7 +53,16 @@ public class ResultsWindow extends JFrame{
 
         
         //play again button
-        JButton playAgain = new JButton("Play Again");
+        JButton newGame = new JButton("New Game");
+        newGame.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                game.resetGame();
+                dispose();
+            }          
+        });
+        getContentPane().add(newGame);
+
+        JButton playAgain = new JButton("Replay This Board");
         playAgain.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 game.resetGame();
@@ -75,7 +84,7 @@ public class ResultsWindow extends JFrame{
 
 
         //save replay button 
-        JButton replay = new JButton("Save Replay");
+        JButton replay = new JButton("Save Replay File");
         replay.addActionListener(new ActionListener(){
             private boolean saved = false;
             public void actionPerformed(ActionEvent e) {
