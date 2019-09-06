@@ -1,31 +1,29 @@
 
-import java.io.IOException;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
-
 
 //game
 import game.Game;
+//menus
+import menus.MenuBar;
 
+
+import menus.SettingsUI;
+
+//player
+import player.SettingsManager;
 //ui
 import ui.GameTimer;
 import ui.GameUI;
 
-//menus
-import menus.MenuBar;
-import menus.ResultsWindow; //prob wont need here idk
-import menus.SettingsWindow;
-
-//player
-import player.SettingsManager;
-
 
 class Main{
-    // game has a board ui instance...? these can all just be declaired in Main I
-    // guess
+    // game has a board ui instance...? these can all just be declaired in Main I guess
+    // 
     public static void main(String[] args) throws IOException {
         
         SettingsManager settingsManager = new SettingsManager();
@@ -69,7 +67,9 @@ class Main{
 
         game.add(mainWindow);
 
-        //SettingsWindow swindow = new SettingsWindow();
+        
+        SettingsUI swindow = new SettingsUI(settingsManager);
+        swindow.setVisible(true);
     }
 
 }

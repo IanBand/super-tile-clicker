@@ -5,16 +5,7 @@ import java.io.File;  // Import the File class
 
 class StatsManager {
 
-    //completely fuckd, need to rewrite
-
-    private int begWon = 0;
-    private int begLost = 0;
-
-    private int intWon = 0;
-    private int intLost = 0;
-
-    private int expWon = 0;
-    private int expLost = 0;
+    private StatsObj stats = new StatsObj(); 
 
     public StatsManager(){
         //read from stats file
@@ -23,34 +14,49 @@ class StatsManager {
     }
 
 
-    public void reportWin(int time, int mode){
+    public void reportWin(int time, Mode mode){
         switch(mode){
-            case 0:
-                begWon++;
+            case BEGINNER:
+                stats.begWon++;
                 break;
-            case 1:
-                intWon++;
+            case INTERMEDIATE:
+                stats.intWon++;
                 break;
-            case 2:
-                expWon++;
+            case ADVANCED:
+                stats.expWon++;
                 break;
             default:
+            //idk if I want to deal with keeping track of custom results
                 break;
         }
     }
-    public void reprotLoss(int mode){
+    public void reprotLoss(Mode mode){
         switch(mode){
-            case 0:
-                begLost++;
+            case BEGINNER:
+                stats.begLost++;
                 break;
-            case 1:
-                intLost++;
+            case INTERMEDIATE:
+                stats.intLost++;
                 break;
-            case 2:
-                expLost++;
+            case ADVANCED:
+                stats.expLost++;
                 break;
             default:
+            //idk if I want to deal with keeping track of custom results
                 break;
+        }
+    }
+
+    public double getWinRate(Mode mode){
+        switch(mode){
+            case BEGINNER:
+            return stats.begWon / (stats.begLost + stats.begWon);
+            case INTERMEDIATE:
+            return stats.intWon / (stats.intLost + stats.intWon);
+            case ADVANCED: 
+            return stats.expWon / (stats.expLost + stats.expWon);
+            default:
+            return 0.0;
         }
     }
 

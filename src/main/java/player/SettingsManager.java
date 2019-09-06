@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 public class SettingsManager {
 
     //default settings
-    private SaveObj settings = new SaveObj(Mode.INTERMEDIATE, false, false, 40, 20, 120);
+    private SaveObj settings = new SaveObj(Mode.CUSTOM, false, false, 20, 40, 120);
 
     private String path = "C:/Users/Bundo/Desktop/code/ms-java/settings.dat";
     private boolean saving = true; //determines if the settings will be saved to a file when updated. settings should autosave when modified
@@ -69,6 +69,9 @@ public class SettingsManager {
         }
     }
 
+    public void saveSettingsToFile(){
+
+    }
 
     public Boolean setCustomHeight(int newHeight){
         if(newHeight * settings.customWidth - 9 >= settings.customMines){
@@ -99,6 +102,15 @@ public class SettingsManager {
             //notify user of invalid custom settings
             return false;
         }
+    }
+    public void setCustomDensity(double ratio){
+        //assumes 0 <= ratio <= 1
+
+        //translate ratio into number of mines
+
+        int maxTiles = settings.customHeight * settings.customWidth - 9;
+
+        settings.customMines =  (int) Math.floor( ratio * (double) maxTiles);
     }
     public GameSettings getSettings(){//returns settings based on mode
 
