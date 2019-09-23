@@ -23,19 +23,19 @@ import ui.GameUI;
 
 class Main{
     // game has a board ui instance...? these can all just be declaired in Main I guess
-    // 
+    
     public static void main(String[] args) throws IOException {
         
         SettingsManager settingsManager = new SettingsManager();
 
         GameTimer timer = new GameTimer();
         //game settings will be read from file, if none found, create and use defaults
-
+        
         Game game = new Game(settingsManager.getSettings());
         game.add(timer);
         
         GameUI board_ui = new GameUI(game);
-        MenuBar menu= new MenuBar();
+        MenuBar menu= new MenuBar(settingsManager);
         
         JFrame mainWindow = new JFrame("Super Tile Clicker");
         mainWindow.getContentPane().setBackground(new Color(185, 184, 185));
@@ -67,9 +67,6 @@ class Main{
 
         game.add(mainWindow);
 
-        
-        SettingsUI swindow = new SettingsUI(settingsManager);
-        swindow.setVisible(true);
     }
 
 }

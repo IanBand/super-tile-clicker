@@ -1,23 +1,37 @@
 package menus;
 
 import javax.swing.JFrame;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import player.SettingsManager;
 
 public class SettingsUI extends JFrame{
 
-    public SettingsUI(SettingsManager manager){
-        initComponents();
 
+    private static final long serialVersionUID = 4694464036091324881L;
 
+    public SettingsUI(SettingsManager manager) {
+        initLayout();
 
+        initFunctions();
 
-
-
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true);
 
     }
-
-
+    private void initFunctions(){
+        jSlider1.addChangeListener(new ChangeListener(){
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider)e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    System.out.print(source.getValue());
+                }    
+            }
+        });
+    }
 
 
 
@@ -57,8 +71,9 @@ public class SettingsUI extends JFrame{
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSlider jSlider1;
 
-    private void initComponents() {
+    private void initLayout() {
 
+        jSlider1 = new javax.swing.JSlider(javax.swing.JSlider.HORIZONTAL, 0, 100, 6);
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -72,7 +87,6 @@ public class SettingsUI extends JFrame{
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSlider1 = new javax.swing.JSlider();
         jLabel8 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
