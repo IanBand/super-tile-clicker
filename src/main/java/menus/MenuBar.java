@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -15,10 +16,14 @@ import menus.SettingsUI;
 
 public class MenuBar extends JMenuBar {
 
+    //Main window, for creating submenu windows
+    private JFrame mainWindow;
+
     /* GAME MENU */
     private JMenu gameMenu;
     private JMenuItem settingsMenuItem;
-    private JMenuItem restartMenuItem;
+    private JMenuItem newGameMenuItem;
+    private JMenuItem resetBoardMenuItem;
     //solver submenu goes here
 
     private JMenu replayMenu;
@@ -30,7 +35,9 @@ public class MenuBar extends JMenuBar {
           System.out.println("Selected: " + e.getActionCommand());
         }
       }
-    public MenuBar(SettingsManager settingsManeger /* also need stats manager and game manager(Game)*/) {
+    public MenuBar(SettingsManager settingsManeger, JFrame mainWindow /* also need stats manager and game manager(Game)*/) {
+
+        this.mainWindow = mainWindow;
 
         /* GAME MENU */
         gameMenu = new JMenu("Game");
@@ -40,12 +47,16 @@ public class MenuBar extends JMenuBar {
         settingsMenuItem.addActionListener(new MenuActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                new SettingsUI(settingsManeger);
+                new SettingsUI(settingsManeger, mainWindow);
             }
         });
         gameMenu.add(settingsMenuItem);
 
-        restartMenuItem = new JMenuItem("Restart Game", KeyEvent.VK_R);
+        newGameMenuItem = new JMenuItem("New Game", KeyEvent.VK_N);
+        gameMenu.add(newGameMenuItem);
+
+        resetBoardMenuItem = new JMenuItem("Reset Board", KeyEvent.VK_R);
+        gameMenu.add(resetBoardMenuItem);
 
 
         //JMenu customGameMenu = new JMenu("Custom");

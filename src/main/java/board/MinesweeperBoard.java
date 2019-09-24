@@ -1,5 +1,3 @@
-//https://stackoverflow.com/questions/380046/how-can-i-best-apply-oop-principles-to-games-and-other-input-driven-gui-apps
-//https://code.tutsplus.com/tutorials/build-a-minesweeper-game-within-200-lines-of-code--active-8578
 package board;
 
 import java.util.Random;

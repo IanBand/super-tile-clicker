@@ -1,40 +1,132 @@
 package menus;
 
-import javax.swing.JFrame;
-import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JSlider;
+
+import player.GameSettings;
+import player.Mode;
 import player.SettingsManager;
 
 public class SettingsUI extends JFrame{
 
 
     private static final long serialVersionUID = 4694464036091324881L;
+    private SettingsManager settingsManager;
+    private GameSettings settings;
 
-    public SettingsUI(SettingsManager manager) {
+
+    public SettingsUI(SettingsManager manager, JFrame mainWindow) {
+        settingsManager = manager;
+        settings = manager.getSettings();
+
         initLayout();
-
+        initValues();
         initFunctions();
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(mainWindow);
+        setTitle("Game Settings");
         setVisible(true);
 
     }
     private void initFunctions(){
+        //mine density slider
         jSlider1.addChangeListener(new ChangeListener(){
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider)e.getSource();
                 if (!source.getValueIsAdjusting()) {
-                    System.out.print(source.getValue());
+                    //System.out.print(source.getValue());
+
+                    int newMines = (int) ( (settings.height * settings.width - 9) *  ((double) source.getValue() / (double)100)); //may cause bugs for small boards...
+                    settingsManager.setCustomMines(newMines);
+
+                    //set custom mines
+                    jFormattedTextField3.setText("" + newMines);
                 }    
             }
         });
+
+        //custom radio button
+        jRadioButton1.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent ie){
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    System.out.println("mode changed to " + Mode.CUSTOM);
+                    settingsManager.setMode(Mode.CUSTOM);
+                }
+            }
+        });
+
+        //beginner radio button
+        jRadioButton2.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent ie){
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    System.out.println("mode changed to " + Mode.BEGINNER);
+                    settingsManager.setMode(Mode.BEGINNER);
+                }
+            }
+        });
+
+        //intermediate radio button
+        jRadioButton3.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent ie){
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    System.out.println("mode changed to " + Mode.INTERMEDIATE);
+                    settingsManager.setMode(Mode.INTERMEDIATE);
+                }
+            }
+        });
+
+        //advanced radio button
+        jRadioButton4.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent ie){
+                if(ie.getStateChange() == ItemEvent.SELECTED){
+                    System.out.println("mode changed to " + Mode.ADVANCED);
+                    settingsManager.setMode(Mode.ADVANCED);
+                }
+            }
+        });
+
     }
 
+    //initialises the values of the text fields, checkboxes, slider, and radio buttons based on the settings
+    private void initValues(){
+        //set mode
+        switch(settingsManager.getSettings().mode){
+            case CUSTOM:
+                jRadioButton1.setSelected(true);
+                break;
+            case BEGINNER:
+                jRadioButton2.setSelected(true);
+                break;
+            case INTERMEDIATE:
+                jRadioButton3.setSelected(true);
+                break;
+            case ADVANCED:
+                jRadioButton4.setSelected(true);
+                break;
 
+        }
+        //set custom height
+        jFormattedTextField1.setText("" + settings.height);
 
+        //set custom width
+        jFormattedTextField2.setText("" + settings.width);
+
+        //set custom mines
+        jFormattedTextField3.setText("" + settings.mines);
+
+        //set custom mine density slider
+        jSlider1.setValue((int) (((double)settings.mines / (double)(settings.height * (double)settings.width)) * (double)100));
+        //TODO: set other checkboxes
+
+    }
 
 
 
@@ -73,7 +165,7 @@ public class SettingsUI extends JFrame{
 
     private void initLayout() {
 
-        jSlider1 = new javax.swing.JSlider(javax.swing.JSlider.HORIZONTAL, 0, 100, 6);
+        jSlider1 = new javax.swing.JSlider(javax.swing.JSlider.HORIZONTAL, 0, 100, 0);
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -158,7 +250,7 @@ public class SettingsUI extends JFrame{
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80 /*72 */, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel6)
                                             .addComponent(jLabel7))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)

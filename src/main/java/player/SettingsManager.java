@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import javax.swing.JFrame;
+
 public class SettingsManager {
 
     //default settings
@@ -11,6 +13,7 @@ public class SettingsManager {
 
     private String path = "C:/Users/Bundo/Desktop/code/ms-java/settings.dat";
     private boolean saving = true; //determines if the settings will be saved to a file when updated. settings should autosave when modified
+
 
     //... no matter what the settings are, a user should always be able to read the height, width, and num mines in a standard way
 
@@ -103,7 +106,7 @@ public class SettingsManager {
             return false;
         }
     }
-    public void setCustomDensity(double ratio){
+    public void setCustomDensity(double ratio){//wont need
         //assumes 0 <= ratio <= 1
 
         //translate ratio into number of mines
@@ -144,4 +147,6 @@ public class SettingsManager {
 
 
     public void setMode(Mode m){settings.mode = m;}
+
+
 }
